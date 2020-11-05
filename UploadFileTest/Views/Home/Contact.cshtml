@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "上傳";
+}
+<h2>@ViewBag.Title.</h2>
+
+
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <table>
+        <tr>
+            <td>Reason</td>
+            <td> <input name="REASON" type="text" /></td>
+        </tr>
+        <tr>
+            <th>附件檔</th>
+            <td>
+                <div class="demo-section k-content">
+                    <input type="file" class="suda_btn" name="files" id="files" multiple="multiple" />
+                    <label name="filename" id="lable1"></label>
+                    <br />
+                    <label name="filename" id="lable2"></label>
+                    <br />
+                    <label name="filename" id="lable3"></label>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" value="提交" class="btn btn-primary" />
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+}
+
+<script src="~/Scripts/jquery/jquery.form.min.js"></script>
+@section Scripts{
+    <script type="text/javascript">
+
+        //儲存按鈕
+        $('input[type="submit"]', holder).click(function (e) {
+            // debugger;
+            //檢查附件是否超過3個
+            var fileObj = document.getElementById("files").files;
+            if (fileObj.length > 3) {
+                alert("附檔不能超過3個");
+                fileObj.outerHTML = fileObj.outerHTML
+                return;
+            }
+        })
+
+
+    </script>
+}

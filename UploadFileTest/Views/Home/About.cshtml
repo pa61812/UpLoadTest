@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "下載";
+}
+<h2>@ViewBag.Title.</h2>
+
+
+<input type="button" class="suda_btn" name="filename" id="file1" value="附件" />
+
+<script src="~/Scripts/jquery/jquery.form.min.js"></script>
+@section Scripts{
+    <script type="text/javascript">
+        $("input[name='filename']").click(function () {
+            var id = this.id;
+            // var formid = $("#formid").text();
+            var filename = this.value;
+            $.ajax({
+                url: '/Home/Getfile',
+                type: 'Post',
+                data: {
+                    fileId: id
+                }
+
+            }).done((data) => {
+
+                debugger;
+                // 這邊一定要用原生的 document.createElement
+                // jQuery 沒辦法真的模擬原生的 click event
+                const $a = document.createElement("a")
+                // 給下載回來的資料產生一個網址
+                var binaryData = [];
+                binaryData.push(data);
+                var blob = new Blob([binaryData], { type: "application/zip" });
+
+                const url = window.URL.createObjectURL(blob);
+                // 設定下載的檔名
+                $a.download = "Output.zip"
+                // 設定網址
+                $a.href = url
+                // 模擬使用者按下連結
+                $a.click()
+            })
+
+        })
+    </script>
+}
